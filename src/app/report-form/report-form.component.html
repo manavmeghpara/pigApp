@@ -1,0 +1,38 @@
+<form
+[formGroup]="mainForm"
+(ngSubmit) = "onSubmit(mainForm.value)"
+class=" container card p-3 bg-light"
+>
+    <div formGroupName = "repInfo" class="form-row">
+        <h2> Reporters Information :</h2>
+        <label for="reporter-name">First Name: </label>
+        <input id="reporter-name" type="text" placeholder="NAME" formControlName="reporter_name">
+        
+        <label for="reporter-phone">Phone Number: </label>
+        <input id="reporter-phone" type="tel" placeholder="888 888 8888" formControlName="reporter_phone">
+    </div>
+    <div formGroupName = "pigInfo" class="form-row">
+        <h2> Pig's Information :</h2>
+        <label for="pig-breed">Pig Breed: </label>
+        <input id="pig-breed" type="text" placeholder="BREED" formControlName="pig_breed">
+    
+        <label for="pid-num">Pig Identification Number(Pid): </label>
+        <input id="pid-num" type="text" placeholder="000" formControlName="pid">
+        <small class="text-muted">Look at the left butt-cheek.</small>
+    </div>
+    <div formGroupName = "location" class="form-row">
+        <h2> Location of Pig :</h2>
+        <label for="loc-name">Location Name:</label>
+        <input id="loc-name" type="text" placeholder="Address name" formControlName="location_name">
+    
+        <label for="loc-long">Location's Longitute:</label>
+        <input id="loc-long" type="text" placeholder="Longitute" formControlName="location_longitute">
+        <label for="loc-lat">Location's Latitute:</label>
+        <input id="loc-lat" type="text" placeholder="Latitute" formControlName="location_latitute">
+    </div>
+    <div class="formfield">
+        <label for="extra-notes">Extra Notes:</label>
+        <textarea id="extra-notes"  rows="5" placeholder="Extra information" formControlName="extra"></textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-primary" [disabled]="!mainForm.valid"> Submit </button>
+</form>

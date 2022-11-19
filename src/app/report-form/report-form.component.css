@@ -1,0 +1,36 @@
+form{
+    box-sizing: border-box;
+    border-color: black;
+}
+input{
+    padding: 5px 10px;
+    margin: 8px 10px;
+    box-sizing: border-box;
+    border: 2px solid rgb(151, 149, 149);
+    border-radius: 6px;
+    background-color: #f8f8f8;
+}
+.formfield * {
+    vertical-align: top;
+    margin-top: 10px;
+}
+
+textarea {
+    width: 50%;
+    height: 100px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border: 2px solid rgb(151, 149, 149);
+    border-radius: 6px;
+    background-color: #f8f8f8;
+    resize: none;
+} 
+button{
+    width: fit-content;
+    margin: 10px 10px;
+}
+
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; 
+}
+
