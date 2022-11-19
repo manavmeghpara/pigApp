@@ -26,9 +26,9 @@ class=" container card p-3 bg-light"
         <input id="loc-name" type="text" placeholder="Address name" formControlName="location_name">
     
         <label for="loc-long">Location's Longitute:</label>
-        <input id="loc-long" type="text" placeholder="Longitute" formControlName="location_longitute">
+        <input id="loc-long" type="text" placeholder="Longitude" formControlName="location_longitude">
         <label for="loc-lat">Location's Latitute:</label>
-        <input id="loc-lat" type="text" placeholder="Latitute" formControlName="location_latitute">
+        <input id="loc-lat" type="text" placeholder="Latitude" formControlName="location_latitude">
     </div>
     <div class="formfield">
         <label for="extra-notes">Extra Notes:</label>
@@ -36,3 +36,9 @@ class=" container card p-3 bg-light"
     </div>
     <button type="submit" class="btn btn-outline-primary" [disabled]="!mainForm.valid"> Submit </button>
 </form>
+
+<app-report-list
+    *ngFor="let p of pigReport"
+    [pigRep]="p"
+
+></app-report-list>

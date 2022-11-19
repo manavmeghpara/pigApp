@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Pig, Location, PigReport } from '../pig';
 
 @Component({
   selector: 'app-report-form',
   templateUrl: './report-form.component.html',
   styleUrls: ['./report-form.component.css']
 })
+
 export class ReportFormComponent implements OnInit {
 
-  mainForm : FormGroup;
-
+  mainForm : FormGroup
+  pigReport : PigReport[]
   constructor() {
+    this.pigReport = []
     var reporterControls = {
       reporter_name : new FormControl('',[
         Validators.required
@@ -32,10 +35,10 @@ export class ReportFormComponent implements OnInit {
       location_name : new FormControl('',[
         Validators.required
       ]),
-      location_longitute : new FormControl('',[
+      location_longitude : new FormControl('',[
         Validators.required
       ]),
-      location_latitute : new FormControl('',[
+      location_latitude : new FormControl('',[
         Validators.required
       ]),
     }
@@ -48,7 +51,11 @@ export class ReportFormComponent implements OnInit {
 
   }
   onSubmit(val: FormGroup): void{
-    console.log(val)
+    var pigInfo = new Pig(this.mainForm.get('pigInfo.pig_breed')?.value, this.mainForm.get('pigInfo.pid')?.value)
+    var location = new Location(this.mainForm.get('location.location_name')?.value, this.mainForm.get('location.location_longitude')?.value, this.mainForm.get('location.location_latitude')?.value )
+    var pReport = new PigReport(this.mainForm.get('repInfo.reporter_name')?.value, this.mainForm.get('repInfo.reporter_phone')?.value, pigInfo, location,this.mainForm.get('extra')?.value)
+    this.pigReport.push(pReport)
+    console.log(this.pigReport)
   }
   ngOnInit(): void {
   }
