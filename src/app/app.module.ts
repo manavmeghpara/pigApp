@@ -14,9 +14,10 @@ import { ReportListComponent } from './report-list/report-list.component';
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }

@@ -9,10 +9,22 @@ import { PigReport } from '../pig';
 export class ReportListComponent implements OnInit {
 
   @Input()
-  pigRep!: PigReport;
-  constructor() { }
+  repList!: PigReport[];
+
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+  }
+  displayStyle = "none";
+  
+  openPopup(event:any) {
+    console.log(event);
+    this.displayStyle = "block";
+  }
+  closePopup() {
+    this.displayStyle = "none";
   }
 
 }
