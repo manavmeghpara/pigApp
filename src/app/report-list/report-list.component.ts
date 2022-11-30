@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PigReport } from '../pig';
+import { ReportService } from '../report.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-report-list',
@@ -8,14 +11,23 @@ import { PigReport } from '../pig';
 })
 export class ReportListComponent implements OnInit {
 
-  @Input()
-  repList!: PigReport[];
+  repList: PigReport[];
 
 
-  constructor() {
+  constructor(public rs: ReportService, private router: Router) {
+    this.repList = []
   }
 
+  toForm(){
+    this.router.navigateByUrl('/form')
+
+  }
   ngOnInit(): void {
+    this.repList = this.rs.get()
+  }
+
+  delReport(pigRep: PigReport){
+    this.rs.deleteReport(pigRep)
   }
 
   showMore(pigRep: PigReport){
@@ -26,6 +38,7 @@ export class ReportListComponent implements OnInit {
     document.getElementById("lname")!.innerHTML=pigRep.location.lname
     document.getElementById("llong")!.innerHTML=pigRep.location.longitude
     document.getElementById("llat")!.innerHTML=pigRep.location.latitide
+    document.getElementById("status")!.innerHTML = pigRep.status
     document.getElementById("time")!.innerHTML= (new Date(pigRep.addedOn)).toString()
     document.getElementById("notes")!.innerHTML=pigRep.extraNotes
 

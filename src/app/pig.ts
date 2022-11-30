@@ -31,6 +31,8 @@ export class PigReport{
     extraNotes : string
     addedOn : number
     status : Status
+    id : number
+    static index : number = 0
     constructor(repName:string, repPhone : number, pigInfo: Pig, location:Location, extraNotes:string){
         this.repName = repName
         this.repPhone = repPhone
@@ -39,6 +41,8 @@ export class PigReport{
         this.extraNotes = extraNotes
         this.addedOn = (new Date().getTime())
         this.status = Status.Ready
+        this.id = PigReport.index
+        PigReport.index++;
     }
 
 }

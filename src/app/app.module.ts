@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { ReportFormComponent } from './report-form/report-form.component';
 import { ReportListComponent } from './report-list/report-list.component';
+import { ReportRoutingModule } from './report-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { ReportListComponent } from './report-list/report-list.component';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    ReportRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
