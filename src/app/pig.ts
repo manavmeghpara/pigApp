@@ -18,7 +18,7 @@ export class Location{
     }
 }
 
-enum Status{
+export enum Status{
     Ready = "READY FOR PICKUP",
     Retrieved = "RETRIEVED"
 }
