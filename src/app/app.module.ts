@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import * as L from 'leaflet';
+import * as $ from "jquery";
+import { DataTablesModule } from 'angular-datatables';
 
 
 import { AppComponent } from './app.component';
@@ -20,7 +23,9 @@ import { DisplayMapComponent } from './display-map/display-map.component';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
+    DataTablesModule,
     HttpClientModule,
     ReportRoutingModule
   ],

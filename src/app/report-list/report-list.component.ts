@@ -14,7 +14,6 @@ import { Md5 } from 'ts-md5';
 export class ReportListComponent implements OnInit {
 
   repList: PigReport[];
-
   constructor(public rs: ReportService, private router: Router, private http:HttpClient) {
     this.repList = []
   }
@@ -25,6 +24,11 @@ export class ReportListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.repList = this.rs.get()
+    setTimeout(function () {
+      $(function () {
+        $('#example').DataTable();
+      });
+    }, 300);
   }
 
   changeStatus(pigRep: PigReport){
