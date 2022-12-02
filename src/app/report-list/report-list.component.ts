@@ -28,7 +28,7 @@ export class ReportListComponent implements OnInit {
       $(function () {
         $('#example').DataTable();
       });
-    }, 300);
+    }, 10);
   }
 
   changeStatus(pigRep: PigReport){
@@ -77,8 +77,8 @@ export class ReportListComponent implements OnInit {
     document.getElementById("pbreed")!.innerHTML=pigRep.pigInfo.pigBreed
     document.getElementById("pid")!.innerHTML=pigRep.pigInfo.pid
     document.getElementById("lname")!.innerHTML=pigRep.location.lname
-    document.getElementById("llong")!.innerHTML=pigRep.location.longitude
-    document.getElementById("llat")!.innerHTML=pigRep.location.latitide
+    document.getElementById("llong")!.innerHTML=pigRep.location.longitude.toString()
+    document.getElementById("llat")!.innerHTML=pigRep.location.latitide.toString()
     document.getElementById("status")!.innerHTML = pigRep.status
     document.getElementById("time")!.innerHTML= (new Date(pigRep.addedOn)).toString()
     document.getElementById("notes")!.innerHTML=pigRep.extraNotes

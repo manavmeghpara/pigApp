@@ -6,7 +6,7 @@ class=" container card p-3 bg-light"
     <div formGroupName = "repInfo" class="form-row">
         <h2> Reporters Information :</h2>
         <label for="reporter-name">First Name: </label>
-        <input id="reporter-name" type="text" placeholder="NAME" formControlName="reporter_name">
+        <input id="reporter-name" type="text" placeholder="NAME" formControlName="reporter_name"><br>
         
         <label for="reporter-phone">Phone Number: </label>
         <input id="reporter-phone" type="tel" placeholder="888 888 8888" formControlName="reporter_phone">
@@ -14,7 +14,7 @@ class=" container card p-3 bg-light"
     <div formGroupName = "pigInfo" class="form-row">
         <h2> Pig's Information :</h2>
         <label for="pig-breed">Pig Breed: </label>
-        <input id="pig-breed" type="text" placeholder="BREED" formControlName="pig_breed">
+        <input id="pig-breed" type="text" placeholder="BREED" formControlName="pig_breed"><br>
     
         <label for="pid-num">Pig Identification Number(Pid): </label>
         <input id="pid-num" type="text" placeholder="000" formControlName="pid">
@@ -22,13 +22,19 @@ class=" container card p-3 bg-light"
     </div>
     <div formGroupName = "location" class="form-row">
         <h2> Location of Pig :</h2>
+        <label for="loc">Choose a Location:</label>
+        <select  name="loc" id="locat">
+            <option value="choose">Choose...</option>
+            <option *ngFor="let l of locList"  value={{l.lname}}>{{l.lname}}</option>
+        </select><br>
+        <p>OR</p><br> <p>Add new Location :</p>
         <label for="loc-name">Location Name:</label>
-        <input id="loc-name" type="text" placeholder="Address name" formControlName="location_name">
+        <input id="loc-name" type="text" placeholder="Address name" formControlName="location_name"><br>
     
         <label for="loc-long">Location's Longitute:</label>
-        <input id="loc-long" type="text" placeholder="Longitude" formControlName="location_longitude">
+        <input id="loc-long" type="text" placeholder="Longitude" formControlName="location_longitude"><br>
         <label for="loc-lat">Location's Latitute:</label>
-        <input id="loc-lat" type="text" placeholder="Latitude" formControlName="location_latitude">
+        <input id="loc-lat" type="text" placeholder="Latitude" formControlName="location_latitude"><br>
     </div>
     <div class="formfield">
         <label for="extra-notes">Extra Notes:</label>

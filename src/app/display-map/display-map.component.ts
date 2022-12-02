@@ -1,5 +1,7 @@
 
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { LocationService } from '../location.service';
+import { Location } from '../pig';
 import * as L from 'leaflet';
 
 // need to add to make leaflet icons work
@@ -24,13 +26,16 @@ Marker.prototype.options.icon = iconDefault;
   templateUrl: './display-map.component.html',
   styleUrls: ['./display-map.component.css']
 })
-export class DisplayMapComponent implements AfterViewInit {
-
+export class DisplayMapComponent implements AfterViewInit, OnInit {
+  lsArr : Location[];
   private map: any;
+  constructor(private ls: LocationService) { 
+    this.lsArr = []
+  }
 
-  constructor() { }
+  ngOnInit(): void {
+    this.lsArr = this.ls.get()
 
-  ngAfterViewInit(): void { 
     this.map = L.map('mapid').setView([49.2, -123], 11);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibW1lZ2hwYXIiLCJhIjoiY2xiNHFsbXRsMGIwcDNybDB6bmdvbzV5MiJ9.zzkFKeW0pPIQJVlwCux_rQ', {
@@ -42,11 +47,18 @@ export class DisplayMapComponent implements AfterViewInit {
       zoomOffset: -1
     }).addTo(this.map);
 
-    L.marker([49.2276, -123.0076]).addTo(this.map)
-    .bindPopup("<b>Metrotown</b><br />cases reported.").openPopup();
+    for (let i=0; i<this.lsArr.length; i++){
+      L.marker([this.lsArr[i].longitude, this.lsArr[i].latitide]).addTo(this.map)
+      .bindPopup("<b>"+this.lsArr[i].lname+"</b><br />cases reported.").openPopup();
+    }
+ 
 
     L.marker([49.1867, -122.8490]).addTo(this.map)
     .bindPopup("<b>SFU Surrey</b><br />cases reported.").openPopup();
+  }
+
+  ngAfterViewInit(): void { 
+
 
   }
 

@@ -9,9 +9,9 @@ export class Pig{
 
 export class Location{
     lname : string
-    longitude : string
-    latitide : string
-    constructor(lname: string, longitude: string, latitude: string){
+    longitude : number
+    latitide : number
+    constructor(lname: string, longitude: number, latitude: number){
         this.lname = lname
         this.latitide = latitude
         this.longitude = longitude
