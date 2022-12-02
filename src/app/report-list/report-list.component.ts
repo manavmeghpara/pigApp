@@ -33,17 +33,18 @@ export class ReportListComponent implements OnInit {
       if (Md5.hashStr(password) === "84892b91ef3bf9d216bbc6e88d74a77c"){
         document.getElementById('chStatus')!.style.display = "block";
         document.getElementById('confirmStatus')!.addEventListener('click', ()=>{
-          let pigR = pigRep
-          this.rs.pigReport = this.rs.pigReport.filter(p=>(p.repName!==pigRep.repName))
+      
+          this.rs.pigReport = this.rs.pigReport.filter(p=>(p.addedOn!==pigRep.addedOn))
           if((document.getElementById('ready')! as HTMLInputElement).checked)
-            pigR.status = Status.Ready
+            pigRep.status = Status.Ready
           else 
-            pigR.status = Status.Retrieved
-          this.rs.pigReport.push(pigR)
+            pigRep.status = Status.Retrieved
+          this.rs.pigReport.push(pigRep)
           this.http.put<PigReport>('https://272.selfip.net/apps/ei7OgQTW2K/collections/report/documents/reportList/',
           {"key":"reportList", "data":this.rs.pigReport}
           ).subscribe((data:PigReport)=>{
           })
+          window.location.reload()
         })
       }
       else 
@@ -58,6 +59,7 @@ export class ReportListComponent implements OnInit {
       if (Md5.hashStr(password) === "84892b91ef3bf9d216bbc6e88d74a77c"){
         this.rs.deleteReport(pigRep);
         (document.getElementById('closeModal')! as HTMLButtonElement).click()
+        window.location.reload()
       }
       else 
         document.getElementById('wrong')!.style.display="block"
