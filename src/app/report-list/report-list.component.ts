@@ -3,6 +3,7 @@ import { PigReport, Status } from '../pig';
 import { ReportService } from '../report.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { LocationService } from '../location.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Md5 } from 'ts-md5';
 
@@ -14,7 +15,7 @@ import { Md5 } from 'ts-md5';
 export class ReportListComponent implements OnInit {
 
   repList: PigReport[];
-  constructor(public rs: ReportService, private router: Router, private http:HttpClient) {
+  constructor(public rs: ReportService, private router: Router, private http:HttpClient, private ls: LocationService) {
     this.repList = []
   }
 
@@ -28,7 +29,7 @@ export class ReportListComponent implements OnInit {
       $(function () {
         $('#example').DataTable();
       });
-    }, 10);
+    }, 800);
   }
 
   changeStatus(pigRep: PigReport){
@@ -43,12 +44,13 @@ export class ReportListComponent implements OnInit {
             pigRep.status = Status.Ready
           else 
             pigRep.status = Status.Retrieved
-          this.rs.pigReport.push(pigRep)
-          this.http.put<PigReport>('https://272.selfip.net/apps/ei7OgQTW2K/collections/report/documents/reportList/',
-          {"key":"reportList", "data":this.rs.pigReport}
-          ).subscribe((data:PigReport)=>{
-          })
-          window.location.reload()
+          this.rs.addReport(pigRep)
+
+          setTimeout(function () {
+            $(function () {
+              window.location.reload()
+            });
+          }, 800)
         })
       }
       else 
@@ -62,9 +64,13 @@ export class ReportListComponent implements OnInit {
       var password = (document.getElementById('password')! as HTMLInputElement).value
       if (Md5.hashStr(password) === "84892b91ef3bf9d216bbc6e88d74a77c"){
         this.rs.deleteReport(pigRep);
+        this.ls.delLoc(pigRep.location);
         (document.getElementById('closeModal')! as HTMLButtonElement).click()
-        window.location.reload()
-      }
+        setTimeout(function () {
+          $(function () {
+            window.location.reload()
+          });
+        }, 800)      }
       else 
         document.getElementById('wrong')!.style.display="block"
     })
