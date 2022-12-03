@@ -49,8 +49,15 @@ export class LocationService {
   }
 
   delLoc(loc: Location){
-    let idx = this.location.map(e => e.lname).indexOf(loc.lname)
-    this.location = this.location.splice(idx, 1)
+    let seenLoc = false;
+    this.location = this.location.filter((a) => {
+        if (seenLoc) {
+            return true;
+        }
+        seenLoc = a.lname == loc.lname;
+        return !seenLoc;
+    });
+
     console.log(this.location)
     this.http.put<Location>('https://272.selfip.net/apps/ei7OgQTW2K/collections/location/documents/loclist/',
     {"key":"loclist", "data":this.location}
