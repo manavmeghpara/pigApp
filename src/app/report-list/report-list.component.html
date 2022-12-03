@@ -1,48 +1,57 @@
-<app-display-map></app-display-map>
+<div class="container">
+  <div class="row">
+    <app-display-map></app-display-map>
+  </div>
+  <div id="butcreate">
+    <button id="create"  class="btn btn-primary col" type="form" (click)="toForm()">Create New Report</button>
+  </div>
+  <div class="row">
+    <table id="example" class="hover order-column nowrap sortable col" cellspacing="0" width="100%">
+      <thead>  
+        <tr>
+          <th>Location</th>
+          <th>Reported By</th>
+          <th>Time Reported</th>
+          <th>Status</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of rs.pigReport">
+          <td>{{r.location.lname}}</td>
+          <td>{{r.repName}}</td>
+          <td>{{r.addedOn | date:'medium'}}</td>
+          <td>{{r.status}}</td>
+          <td><button  type="button"
+            class="btn btn-outline-primary"
+            data-toggle="modal" data-target="#myModal" (click)="showMore(r)">
+            More Info
+          </button></td>
+          <td><button  type="button"
+            class="btn btn-outline-warning"
+            data-toggle="modal" data-target="#editStatus" (click)="changeStatus(r)">
+            Edit Status
+          </button></td>
+          <td><button class="btn btn-outline-danger" data-toggle="modal" data-target="#passModal" (click)="delReport(r)">Delete</button></td>
+        </tr>
+      </tbody>
+      <tfoot>  
+        <tr>
+          <th>Location</th>
+          <th>Reported By</th>
+          <th>Time Reported</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
-<button type="form" (click)="toForm()">Create New Report</button>
+</div>
 
-<table id="example" class=" sortable" cellspacing="0" width="100%">
-  <thead>  
-    <tr>
-      <th>Location</th>
-      <th>Reported By</th>
-      <th>Time Reported</th>
-      <th>Status</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let r of rs.pigReport">
-      <td>{{r.location.lname}}</td>
-      <td>{{r.repName}}</td>
-      <td>{{r.addedOn | date:'medium'}}</td>
-      <td>{{r.status}}</td>
-      <td><button  type="button"
-        class="btn btn-outline-primary"
-        data-toggle="modal" data-target="#myModal" (click)="showMore(r)">
-        More Info
-      </button></td>
-      <td><button  type="button"
-        class="btn btn-outline-warning"
-        data-toggle="modal" data-target="#editStatus" (click)="changeStatus(r)">
-        Edit Status
-      </button></td>
-      <td><button class="btn btn-outline-danger" data-toggle="modal" data-target="#passModal" (click)="delReport(r)">Delete</button></td>
-    </tr>
-  </tbody>
-  <tfoot>  
-    <tr>
-      <th>Location</th>
-      <th>Reported By</th>
-      <th>Time Reported</th>
-      <th>Status</th>
-      <th></th>
-    </tr>
-  </tfoot>
-</table>
+
 
  <!-- The Modal -->
  <div class="modal" id="myModal">

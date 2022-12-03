@@ -3,7 +3,8 @@
 (ngSubmit) = "onSubmit(mainForm.value)"
 class=" container card p-3 bg-light"
 >
-    <div formGroupName = "repInfo" class="form-row">
+<div class="row">
+    <div formGroupName = "repInfo" class="col">
         <h2> Reporters Information :</h2>
         <label for="reporter-name">First Name: </label>
         <input id="reporter-name" type="text" placeholder="NAME" formControlName="reporter_name"><br>
@@ -11,7 +12,8 @@ class=" container card p-3 bg-light"
         <label for="reporter-phone">Phone Number: </label>
         <input id="reporter-phone" type="tel" placeholder="888 888 8888" formControlName="reporter_phone">
     </div>
-    <div formGroupName = "pigInfo" class="form-row">
+
+    <div formGroupName = "pigInfo" class="col">
         <h2> Pig's Information :</h2>
         <label for="pig-breed">Pig Breed: </label>
         <input id="pig-breed" type="text" placeholder="BREED" formControlName="pig_breed"><br>
@@ -20,7 +22,8 @@ class=" container card p-3 bg-light"
         <input id="pid-num" type="text" placeholder="000" formControlName="pid">
         <small class="text-muted">Look at the left butt-cheek.</small>
     </div>
-    <div formGroupName = "location" class="form-row">
+
+    <div formGroupName = "location" class="col">
         <h2> Location of Pig :</h2>
         <label for="loc">Choose a Location:</label>
         <select  name="loc" id="locat">
@@ -40,6 +43,7 @@ class=" container card p-3 bg-light"
         <label for="extra-notes">Extra Notes:</label>
         <textarea id="extra-notes"  rows="5" placeholder="Extra information" formControlName="extra"></textarea>
     </div>
+</div>
     <button type="submit" class="btn btn-outline-primary" [disabled]="!mainForm.valid"> Submit </button>
 </form>
 

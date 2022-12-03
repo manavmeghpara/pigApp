@@ -33,7 +33,15 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.lsArr = this.ls.get()
+    this.ls.get().subscribe((data:any)=>{
+      if(data.data !=""){
+        this.lsArr = data.data
+        for (let i=0; i<this.lsArr.length; i++){
+            L.marker([this.lsArr[i].longitude, this.lsArr[i].latitide]).addTo(this.ls.mapService)
+            .bindPopup("<b>"+this.lsArr[i].lname+"</b><br />cases reported = "+ this.ls.countLoc(this.lsArr[i].lname).toString()).openPopup();
+        }
+      }
+    });
      
   }
 

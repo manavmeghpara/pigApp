@@ -18,10 +18,7 @@ export class LocationService {
         this.location = data.data
 
         console.log(data)
-        for (let i=0; i<this.location.length; i++){
-          L.marker([this.location[i].longitude, this.location[i].latitide]).addTo(this.mapService)
-          .bindPopup("<b>"+this.location[i].lname+"</b><br />cases reported = "+ this.countLoc(this.location[i].lname).toString()).openPopup();
-        }
+        
       }
     })
 
@@ -36,7 +33,9 @@ export class LocationService {
     return count
   }
 
-  get(){ return this.location}
+  get(){ 
+    return this.http.get('https://272.selfip.net/apps/ei7OgQTW2K/collections/location/documents/loclist/')
+  }
 
   addLoc(loc: Location){
     this.location.push(loc)

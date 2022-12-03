@@ -59,17 +59,17 @@ export class ReportFormComponent implements OnInit {
     }
     var pigInfo = new Pig(this.mainForm.get('pigInfo.pig_breed')?.value, this.mainForm.get('pigInfo.pid')?.value)
     var pReport = new PigReport(this.mainForm.get('repInfo.reporter_name')?.value, this.mainForm.get('repInfo.reporter_phone')?.value, pigInfo, location,this.mainForm.get('extra')?.value)
-    this.rs.addReport(pReport)
-
-    this.router.navigateByUrl('/').then(()=>{setTimeout(function () {
-      $(function () {
-        window.location.reload()
-      });
-    }, 800)
-    });
+    this.rs.addReport(pReport).subscribe((data:PigReport)=>{
+      
+    })
+    this.router.navigateByUrl('/')
   }
   ngOnInit(): void {
-    this.locList = this.ls.get();
+    this.ls.get().subscribe((data:any)=>{
+      if(data.data !=""){
+        this.locList = data.data
+      }
+    });
     (document.getElementById('locat')! as HTMLSelectElement).addEventListener('change', ()=>{
       (document.getElementById('loc-name')! as HTMLInputElement).disabled = true;
       (document.getElementById('loc-long')! as HTMLInputElement).disabled = true;

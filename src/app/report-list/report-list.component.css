@@ -1,0 +1,17 @@
+#create{
+    margin: 0 auto;
+    display: block;
+    width: 700px;
+}
+
+#example{
+    border: solid rgb(132, 115, 32) 2px;
+}
+
+.row{
+    margin: 20px;
+}
+
+.modal-title{
+    color: brown;
+}

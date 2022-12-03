@@ -10,7 +10,6 @@ export class ReportService{
   pigReport : PigReport[]
   constructor(private http: HttpClient) {
     this.pigReport = []
-
     this.http.get('https://272.selfip.net/apps/ei7OgQTW2K/collections/report/documents/reportList/')
     .subscribe((data:any)=>{
       if(data.data !=""){
@@ -22,25 +21,24 @@ export class ReportService{
 
   }
 
-  get(){
-    return this.pigReport
+  get() : any{
+    return this.http.get('https://272.selfip.net/apps/ei7OgQTW2K/collections/report/documents/reportList/')
+
   }
 
-  addReport(pr: PigReport){
+  addReport(pr: PigReport) : any{
     this.pigReport.push(pr)
-    this.http.put<PigReport>('https://272.selfip.net/apps/ei7OgQTW2K/collections/report/documents/reportList/',
+    return this.http.put<PigReport>('https://272.selfip.net/apps/ei7OgQTW2K/collections/report/documents/reportList/',
     {"key":"reportList", "data":this.pigReport}
-    ).subscribe((data:PigReport)=>{
-    })
+    )
   }
   
-  deleteReport(pr: PigReport){
+  deleteReport(pr: PigReport) : any{
     this.pigReport = this.pigReport.filter(p=>p.addedOn!==pr.addedOn)
     console.log(this.pigReport)
-    this.http.put<PigReport>('https://272.selfip.net/apps/ei7OgQTW2K/collections/report/documents/reportList/',
+    return this.http.put<PigReport>('https://272.selfip.net/apps/ei7OgQTW2K/collections/report/documents/reportList/',
     {"key":"reportList", "data":this.pigReport}
-    ).subscribe((data:PigReport)=>{
-    })
+    )
   }
 
 }

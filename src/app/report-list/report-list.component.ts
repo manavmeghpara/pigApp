@@ -24,12 +24,15 @@ export class ReportListComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.repList = this.rs.get()
-    setTimeout(function () {
-      $(function () {
-        $('#example').DataTable();
-      });
-    }, 800);
+    
+    this.repList = this.rs.get().subscribe((data:any)=>{
+      if(data.data !=""){
+        this.repList = data.data
+
+        console.log(data)
+      }
+      $('#example').DataTable()
+    })
   }
 
   changeStatus(pigRep: PigReport){
@@ -44,13 +47,10 @@ export class ReportListComponent implements OnInit {
             pigRep.status = Status.Ready
           else 
             pigRep.status = Status.Retrieved
-          this.rs.addReport(pigRep)
-
-          setTimeout(function () {
-            $(function () {
-              window.location.reload()
-            });
-          }, 800)
+          this.rs.addReport(pigRep).subscribe((data:PigReport)=>{
+            (document.getElementById('ccloseModal')! as HTMLButtonElement).click()
+            window.location.reload()
+          })
         })
       }
       else 
@@ -63,14 +63,15 @@ export class ReportListComponent implements OnInit {
     document.getElementById('confirmDel')!.addEventListener('click', ()=>{
       var password = (document.getElementById('password')! as HTMLInputElement).value
       if (Md5.hashStr(password) === "84892b91ef3bf9d216bbc6e88d74a77c"){
-        this.rs.deleteReport(pigRep);
+        this.rs.deleteReport(pigRep).subscribe((data:PigReport)=>{
+          
+          (document.getElementById('closeModal')! as HTMLButtonElement).click()
+        })
         this.ls.delLoc(pigRep.location);
-        (document.getElementById('closeModal')! as HTMLButtonElement).click()
-        setTimeout(function () {
-          $(function () {
-            window.location.reload()
-          });
-        }, 800)      }
+        window.location.reload()
+
+
+      }
       else 
         document.getElementById('wrong')!.style.display="block"
     })
