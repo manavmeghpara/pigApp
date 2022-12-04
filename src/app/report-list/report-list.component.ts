@@ -64,12 +64,14 @@ export class ReportListComponent implements OnInit {
       var password = (document.getElementById('password')! as HTMLInputElement).value
       if (Md5.hashStr(password) === "84892b91ef3bf9d216bbc6e88d74a77c"){
         this.rs.deleteReport(pigRep).subscribe((data:PigReport)=>{
-          
           (document.getElementById('closeModal')! as HTMLButtonElement).click()
+
         })
         this.ls.delLoc(pigRep.location);
-        window.location.reload()
+        setTimeout(function(){
+          window.location.reload()
 
+        }, 800);
 
       }
       else 

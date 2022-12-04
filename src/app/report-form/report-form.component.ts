@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, ValidatorFn, ValidationErrors,FormControl, FormGroup, Validators } from '@angular/forms';
 import { Pig, Location, PigReport } from '../pig';
 import { ReportService } from '../report.service';
 import { LocationService } from '../location.service';
@@ -16,15 +16,19 @@ import { Router } from '@angular/router';
 export class ReportFormComponent implements OnInit {
   locList : Location[];
   mainForm : FormGroup
+  showLoc: boolean
+  addLoc : boolean
   constructor(private http:HttpClient, public rs: ReportService, private router: Router, public ls: LocationService) {
     this.locList = []
+    this.showLoc = false
+    this.addLoc = false
     var reporterControls = {
       reporter_name : new FormControl('',[
         Validators.required
       ]),
       reporter_phone : new FormControl('',[
         Validators.required,
-        Validators.pattern('(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))\s*[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?([-\s\.]?[0-9]{3})([-\s\.]?[0-9]{3,4})')
+        Validators.pattern('[- +()0-9]{10,12}')
       ]),
     }
     var pigControls = {
@@ -32,8 +36,13 @@ export class ReportFormComponent implements OnInit {
         Validators.required
       ]),
       pid : new FormControl('',[
-        Validators.required
+        Validators.required,
+        Validators.pattern('[- +()0-9]{3}')
+
       ])
+    }
+    var chLocation = {
+      chooseLoc : new FormControl('')
     }
     var locControls = {
       location_name : new FormControl(''),
@@ -44,12 +53,31 @@ export class ReportFormComponent implements OnInit {
       repInfo : new FormGroup(reporterControls),
       pigInfo : new FormGroup(pigControls),
       location : new FormGroup(locControls),
+      chLoc : new FormGroup(chLocation),
       extra : new FormControl('')
-    })
+    }, { validators: [this.locationValidator]})
 
   }
+
+  locationValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const choose = control.get("chLoc.chooseLoc")?.value
+    const name = control.get("location.location_name")?.value
+    const long = control.get("location.location_longitude")?.value
+    const lat = control.get("location.location_latitude")?.value
+
+    if( choose != "" || (name!= "" && long!= "" && lat!=""))
+      return null
+    else 
+      return  { form_error: true}
+
+
+  }
+
+
   onSubmit(val: FormGroup): void{
-    if((document.getElementById('locat')! as HTMLSelectElement).selectedIndex != 0){
+    // this.mainForm.markAllAsTouched();
+
+    if(this.showLoc){
       var location = (this.locList[this.locList.findIndex(x=>x.lname ===  (document.getElementById('locat')! as HTMLSelectElement).value)])
       this.ls.addLoc(location)
     }
@@ -70,17 +98,14 @@ export class ReportFormComponent implements OnInit {
         this.locList = data.data
       }
     });
-    (document.getElementById('locat')! as HTMLSelectElement).addEventListener('change', ()=>{
-      (document.getElementById('loc-name')! as HTMLInputElement).disabled = true;
-      (document.getElementById('loc-long')! as HTMLInputElement).disabled = true;
-      (document.getElementById('loc-lat')! as HTMLInputElement).disabled = true
-
-    });
-
-    (document.getElementById('loc-name')! as HTMLSelectElement).addEventListener('change', ()=>{
-      (document.getElementById('locat')! as HTMLInputElement).disabled = true;
-
-    })
+    (document.getElementById('add')! as HTMLInputElement).onclick =  ()=>{
+      this.addLoc = true;
+      this.showLoc = false;
+    };
+    (document.getElementById('existing') as HTMLInputElement).onclick =  ()=>{
+      this.showLoc = true;
+      this.addLoc = false;
+    };
   }
 
 }

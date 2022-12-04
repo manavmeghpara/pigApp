@@ -34,7 +34,7 @@ export class ReportService{
   }
   
   deleteReport(pr: PigReport) : any{
-    this.pigReport = this.pigReport.filter(p=>p.addedOn!==pr.addedOn)
+    this.pigReport = this.pigReport.filter(p=>p.addedOn!=pr.addedOn)
     console.log(this.pigReport)
     return this.http.put<PigReport>('https://272.selfip.net/apps/ei7OgQTW2K/collections/report/documents/reportList/',
     {"key":"reportList", "data":this.pigReport}

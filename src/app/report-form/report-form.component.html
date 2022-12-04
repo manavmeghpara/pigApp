@@ -7,39 +7,87 @@ class=" container card p-3 bg-light"
     <div formGroupName = "repInfo" class="col">
         <h2> Reporters Information :</h2>
         <label for="reporter-name">First Name: </label>
-        <input id="reporter-name" type="text" placeholder="NAME" formControlName="reporter_name"><br>
+        <input
+        [ngStyle]="{ 'border-color': (mainForm.get('repInfo.reporter_name')?.invalid && mainForm.get('repInfo.reporter_name')?.touched) ? 'red':'green'}"
+        id="reporter-name" type="text" placeholder="NAME" formControlName="reporter_name"><br>
+        <div *ngIf="mainForm.get('repInfo.reporter_name')?.invalid && mainForm.get('repInfo.reporter_name')?.touched ">
+            <p class="invalid">Field is required.</p>
+        </div>
         
         <label for="reporter-phone">Phone Number: </label>
-        <input id="reporter-phone" type="tel" placeholder="888 888 8888" formControlName="reporter_phone">
+        <input 
+        [ngStyle]="{ 'border-color': (mainForm.get('repInfo.reporter_phone')?.invalid && mainForm.get('repInfo.reporter_phone')?.touched) ? 'red':'green'}"
+        id="reporter-phone" type="tel" placeholder="888 888 8888" formControlName="reporter_phone">
+        <div *ngIf="mainForm.get('repInfo.reporter_phone')?.invalid&& mainForm.get('repInfo.reporter_phone')?.touched ">
+            <p class="invalid">Field is empty or number pattern doesn't match.</p>
+        </div>
     </div>
 
     <div formGroupName = "pigInfo" class="col">
         <h2> Pig's Information :</h2>
         <label for="pig-breed">Pig Breed: </label>
-        <input id="pig-breed" type="text" placeholder="BREED" formControlName="pig_breed"><br>
+        <input
+        [ngStyle]="{ 'border-color': (mainForm.get('pigInfo.pig_breed')?.invalid && mainForm.get('pigInfo.pig_breed')?.touched) ? 'red':'green'}"
+        id="pig-breed" type="text" placeholder="BREED" formControlName="pig_breed"><br>
+        <div *ngIf="mainForm.get('pigInfo.pig_breed')?.invalid&& mainForm.get('pigInfo.pig_breed')?.touched ">
+            <p class="invalid">Field is required.</p>
+        </div>
     
         <label for="pid-num">Pig Identification Number(Pid): </label>
-        <input id="pid-num" type="text" placeholder="000" formControlName="pid">
+        <input
+        [ngStyle]="{ 'border-color': (mainForm.get('pigInfo.pid')?.invalid && mainForm.get('pigInfo.pid')?.touched) ? 'red':'green'}"
+        id="pid-num" type="text" placeholder="000" formControlName="pid">
         <small class="text-muted">Look at the left butt-cheek.</small>
+        <div *ngIf="mainForm.get('pigInfo.pid')?.invalid&& mainForm.get('pigInfo.pid')?.touched ">
+            <p class="invalid">Field is empty or number pattern doesn't match.</p>
+        </div>
     </div>
-
-    <div formGroupName = "location" class="col">
+</div>
+<div class="row">
+    <div  class="col">
         <h2> Location of Pig :</h2>
-        <label for="loc">Choose a Location:</label>
-        <select  name="loc" id="locat">
-            <option value="choose">Choose...</option>
-            <option *ngFor="let l of locList"  value={{l.lname}}>{{l.lname}}</option>
-        </select><br>
-        <p>OR</p><br> <p>Add new Location :</p>
-        <label for="loc-name">Location Name:</label>
-        <input id="loc-name" type="text" placeholder="Address name" formControlName="location_name"><br>
-    
-        <label for="loc-long">Location's Longitute:</label>
-        <input id="loc-long" type="text" placeholder="Longitude" formControlName="location_longitude"><br>
-        <label for="loc-lat">Location's Latitute:</label>
-        <input id="loc-lat" type="text" placeholder="Latitude" formControlName="location_latitude"><br>
+        <div style="color: black;">
+            <label>Add or Select Locations:</label><br>
+            <input id="add" type="radio" name="loc" >Add new location.
+            <input id="existing" type="radio" name="loc">select existing location
+        </div>
+        <div formGroupName = "chLoc" *ngIf=showLoc>
+            <label for="loc">Choose a Location:</label>
+            <select
+            [ngStyle]="{ 'border-color': (mainForm.get('chLoc.chooseLoc')?.value=='' && mainForm.get('chLoc.chooseLoc')?.touched) ? 'red':'green'}"
+            name="loc" id="locat" formControlName="chooseLoc">
+                <option *ngFor="let l of locList"  value={{l.lname}}>{{l.lname}}</option>
+            </select><br>
+            <div *ngIf="mainForm.get('chLoc.chooseLoc')?.value =='' && mainForm.get('chLoc.chooseLoc')?.touched ">
+                <p class="invalid">Field is required.</p>
+            </div>
+        </div>
+        <div formGroupName = "location" *ngIf=addLoc>
+            <label for="loc-name">Location Name:</label>
+            <input 
+            [ngStyle]="{ 'border-color': (mainForm.get('location.location_name')?.value =='' && mainForm.get('location.location_name')?.touched) ? 'red':'green'}"
+            id="loc-name" type="text" placeholder="Address name" formControlName="location_name"><br>
+            <div *ngIf="mainForm.get('location.location_name')?.value =='' && mainForm.get('location.location_name')?.touched ">
+                <p class="invalid">Field is required.</p>
+            </div>
+        
+            <label for="loc-long">Location's Longitute:</label>
+            <input 
+            [ngStyle]="{ 'border-color': (mainForm.get('location.location_longitude')?.value =='' && mainForm.get('location.location_longitude')?.touched) ? 'red':'green'}"
+            id="loc-long" type="text" placeholder="Longitude" formControlName="location_longitude"><br>
+            <div *ngIf="mainForm.get('location.location_longitude')?.value =='' && mainForm.get('location.location_longitude')?.touched ">
+                <p class="invalid">Field is required.</p>
+            </div>
+            <label for="loc-lat">Location's Latitute:</label>
+            <input 
+            [ngStyle]="{ 'border-color': (mainForm.get('location.location_latitude')?.value =='' && mainForm.get('location.location_latitude')?.touched) ? 'red':'green'}"
+            id="loc-lat" type="text" placeholder="Latitude" formControlName="location_latitude"><br>
+            <div *ngIf="mainForm.get('location.location_latitude')?.value =='' && mainForm.get('location.location_latitude')?.touched ">
+                <p class="invalid">Field is required.</p>
+            </div>
+        </div>
     </div>
-    <div class="formfield">
+    <div id="addMore" class="formfield col">
         <label for="extra-notes">Extra Notes:</label>
         <textarea id="extra-notes"  rows="5" placeholder="Extra information" formControlName="extra"></textarea>
     </div>
