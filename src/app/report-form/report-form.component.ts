@@ -92,10 +92,17 @@ export class ReportFormComponent implements OnInit {
     })
     this.router.navigateByUrl('/')
   }
+
+
   ngOnInit(): void {
     this.ls.get().subscribe((data:any)=>{
       if(data.data !=""){
         this.locList = data.data
+        this.locList = this.locList.filter((value, index, self) =>
+          index === self.findIndex((t) => (
+            t.lname === value.lname
+          ))
+        )
       }
     });
     (document.getElementById('add')! as HTMLInputElement).onclick =  ()=>{
